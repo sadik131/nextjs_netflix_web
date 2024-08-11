@@ -5,18 +5,10 @@ const counterSlice = createSlice({
     initialState: {
         value: 0
     },
-    reducers: {
-        int: state => {
-            state.value += 1
-        },
-        dec: state => {
-            state.value -= 1
-        }
-    },
+    reducers: {},
     extraReducers(builder) {
 
     },
 })
 
-export const { int, dec } = counterSlice.actions;
 export default counterSlice.reducer

@@ -1,17 +1,12 @@
 "use client"
-
-import { int } from "@/redux/counter/counterSlice";
-import { RootState } from "@/redux/store";
-import { useDispatch, useSelector } from "react-redux";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
-  const counter = useSelector((state: RootState) => state.counter)
-  const dispatch = useDispatch()
+  const { data: session, status } = useSession();
+  console.log(session,'session')
   return (
     <main>
-      <h1>main page</h1>
-      <p>{counter.value}</p>
-      <button onClick={()=>dispatch(int())}>+</button>
+      Main page
     </main>
   );
 }
