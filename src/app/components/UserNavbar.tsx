@@ -9,7 +9,7 @@ import { FaUserCircle } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 
 function UserNavbar() {
-    const { user, status } = useSelector((state: RootState) => state.auth)
+    const { currentUser: user, status } = useSelector((state: RootState) => state.auth)
     const [isOpen, setIsOpen] = useState(false)
     const dispatch = useDispatch<AppDispatch>()
 

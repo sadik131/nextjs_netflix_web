@@ -22,10 +22,12 @@ function Auth() {
   const handelSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(true)
     e.preventDefault()
+    console.log(email, password)
     // login
     if (variant === "login") {
       try {
-        if(!email && !password){
+
+        if (!email && !password) {
           return alert("put all info")
         }
 
@@ -35,9 +37,9 @@ function Auth() {
           redirect: true,
           callbackUrl: '/',
         })
-          if(res?.error){
-            setError(res.error)
-          }
+        if (res?.error) {
+          setError(res.error)
+        }
         setLoading(false)
       } catch (error) {
         console.log(error, "next exx")

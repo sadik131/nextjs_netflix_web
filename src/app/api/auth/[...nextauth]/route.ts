@@ -11,13 +11,18 @@ interface Credentials {
 export const authOptions = {
     providers: [
         CredentialsProvider({
-            name:"credentials",
+            name: "credentials",
             credentials: {
                 email: { label: 'Email', type: 'text' },
                 password: { label: 'Password', type: 'password' }
             },
             async authorize(credentials) {
                 console.log(credentials)
+
+                // if (!credentials.email && !credentials?.password) {
+                //     throw new Error("put all noticifation")
+                // }
+
                 const user = await prisma.user.findFirst({
                     where: { email: credentials?.email }
                 })
@@ -30,7 +35,7 @@ export const authOptions = {
                 }
                 return user;
             },
-            
+
         }),
     ],
     adapter: PrismaAdapter(prisma),
@@ -39,7 +44,7 @@ export const authOptions = {
     },
     session: {
         strategy: "jwt" as const,
-        maxAge: 2 * 60 * 60, 
+        maxAge: 2 * 60 * 60,
     },
     secret: process.env.NEXTAUTH_SECRET,
 };
