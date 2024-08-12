@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "./components/ReduxProvider";
 import { AuthProvider } from "./components/Provider";
+import SessionWrapper from "@/utils/Wrapper";
+import Navbar from "./components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +24,8 @@ export default function RootLayout({
         <main>
           <AuthProvider>
             <ReduxProvider>
+              <SessionWrapper />
+              <Navbar />
               {children}
             </ReduxProvider>
           </AuthProvider>

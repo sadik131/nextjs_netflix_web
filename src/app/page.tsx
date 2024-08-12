@@ -1,9 +1,10 @@
 "use client"
-import { useSession } from "next-auth/react";
+import { RootState } from "@/redux/store";
+import { useSelector } from "react-redux";
 
 export default function Home() {
-  const { data: session, status } = useSession();
-  console.log(session,'session')
+  const { user, status, error } = useSelector((state: RootState) => state.auth);
+  console.log(user, status, error)
   return (
     <main>
       Main page
