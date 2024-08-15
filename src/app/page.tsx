@@ -1,13 +1,13 @@
-"use client"
-import { RootState } from "@/redux/store";
-import { useSelector } from "react-redux";
+import Layout from "./components/Layout";
+import Banner from "./components/Banner";
+import MovieList from "./components/MovieList";
 
 export default function Home() {
-  const { currentUser: user, status, error } = useSelector((state: RootState) => state.auth);
-  console.log(user, status, error)
+
   return (
-    <main>
-      Main page
-    </main>
+    <Layout>
+      <Banner />
+      <MovieList />
+    </Layout>
   );
 }

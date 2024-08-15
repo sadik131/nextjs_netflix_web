@@ -13,7 +13,6 @@ function Auth() {
   const [loading, setLoading] = useState(false)
   const [variant, setVariant] = useState("login")
   const [error, setError] = useState("")
-  const router = useRouter()
 
   const toggleVariant = () => {
     setVariant(variant === "login" ? "register" : "login")
