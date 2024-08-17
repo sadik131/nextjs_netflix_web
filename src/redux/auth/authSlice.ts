@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { createUserApi, fetchUserApi, makeAdminApi, deleteUserApi } from "./authApi";
-import { CreateUserData, User } from "@/utils";
+import { createUserApi, fetchUserApi, makeAdminApi, deleteUserApi, favoritesApi ,ToggleFavoriteApi} from "./authApi";
+import { CreateUserData, User, FavoriteList } from "@/utils";
 
 export const createUserAsync = createAsyncThunk<User, CreateUserData>(
     "auth/createUserApi",
@@ -34,8 +34,25 @@ export const deleteUserAsync = createAsyncThunk<User, { id: string }>(
     }
 );
 
+export const ToggleFavoriteAsync = createAsyncThunk<FavoriteList, { id: string }>(
+    "auth/ToggleFavoriteApi",
+    async ({ id }):Promise<FavoriteList> => {
+        const response = await ToggleFavoriteApi(id);
+        return response.data;
+    }
+);
+
+export const favoritesAsync = createAsyncThunk<FavoriteList[]>(
+    "auth/favoritesApi",
+    async (): Promise<FavoriteList[]> => {
+        const response = await favoritesApi();
+        return response.data;
+    }
+);
+
 interface AuthState {
     currentUser: User | null;
+    favorite: FavoriteList[];
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null;
     users: User[]
@@ -44,6 +61,7 @@ interface AuthState {
 const initialState: AuthState = {
     currentUser: null,
     users: [],
+    favorite: [],
     status: 'idle',
     error: null,
 };
@@ -97,6 +115,28 @@ const authSlice = createSlice({
             .addCase(deleteUserAsync.fulfilled, (state, action: PayloadAction<User>) => {
                 state.status = 'succeeded';
                 state.users = state.users.filter(user => user.id !== action.payload.id)
+            })
+            .addCase(favoritesAsync.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(favoritesAsync.fulfilled, (state, action: PayloadAction<FavoriteList[]>) => {
+                state.status = 'succeeded';
+                state.favorite = action.payload
+            })
+            .addCase(ToggleFavoriteAsync.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(ToggleFavoriteAsync.fulfilled, (state, action: PayloadAction<FavoriteList>) => {
+                state.status = 'succeeded';
+                const index = state.favorite.findIndex(fav => fav.movieId === action.payload.movieId);
+                console.log(index)
+                if (index >= 0) {
+                    state.favorite.splice(index, 1);
+                } else {
+                    state.favorite.push(action.payload); 
+                }
             })
 
     },

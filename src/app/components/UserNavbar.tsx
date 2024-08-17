@@ -34,7 +34,7 @@ function UserNavbar() {
 
                         {user?.role === "ADMIN" && <Link onClick={() => setIsOpen(!isOpen)} href={"/pages/admin/dashboard"}>Admin</Link>}
                         {user ? <>
-                            <Link onClick={() => setIsOpen(!isOpen)} href={""}>Profile</Link>
+                            <Link onClick={() => setIsOpen(!isOpen)} href={"/pages/profile"}>Profile</Link>
                             <button onClick={() => handelSignOut}>SignOut</button>
                         </>
                             : <Link onClick={() => setIsOpen(!isOpen)} href={"/pages/auth"}>login</Link>}

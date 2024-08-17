@@ -1,4 +1,4 @@
-import { CreateUserData, User } from "@/utils"
+import { CreateUserData, FavoriteList, User } from "@/utils"
 
 export function createUserApi(userinfo: CreateUserData): Promise<{ data: User }> {
     return new Promise(async (resolve) => {
@@ -36,6 +36,26 @@ export function deleteUserApi(id: string): Promise<{ data: User }> {
         const responce = await fetch(`/api/user/${id}`, {
             method: 'DELETE',
             headers: { "content-type": "application/json" },
+        })
+        const data = await responce.json()
+        resolve({ data })
+    })
+}
+
+export function favoritesApi(): Promise<{ data: FavoriteList[] }> {
+    return new Promise(async (resolve) => {
+        const responce = await fetch(`/api/favorites`)
+        const data = await responce.json()
+        resolve({ data })
+    })
+}
+
+export function ToggleFavoriteApi(id: string): Promise<{ data: FavoriteList }> {
+    return new Promise(async (resolve) => {
+        const responce = await fetch(`/api/favorites`, {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ id })
         })
         const data = await responce.json()
         resolve({ data })

@@ -1,7 +1,8 @@
-import NextAuth from 'next-auth';
+import NextAuth, { Session } from 'next-auth';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { prisma } from '@/utils/prisma';
+import { JWT } from 'next-auth/jwt';
 
 interface Credentials {
     email: string;

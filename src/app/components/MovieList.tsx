@@ -1,26 +1,36 @@
-import Image from 'next/image'
-import React from 'react'
+"use client"
+import React, { useEffect } from 'react'
 import MovieCart from './MovieCart';
+import { AppDispatch, RootState } from '@/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMovieAsync } from '@/redux/movie/moviesSlice';
 
 function MovieList() {
+    const dispatch = useDispatch<AppDispatch>()
+    const { movies, status } = useSelector((state: RootState) => state.movie)
+    const { favorite } = useSelector((state: RootState) => state.auth)
+
+    useEffect(() => {
+        dispatch(fetchMovieAsync())
+    }, [])
+
+    if (status === "loading") {
+        return <h1>loading...</h1>
+    }
+
     return (
         <div className='my-10 px-14'>
             <h1 className='text-white font-bold text-2xl my-10'>Recently Added</h1>
             <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2'>
-                <div className='relative h-36 w-full group'>
-                    <Image src={"/img1.jpeg"} alt='thumb' fill sizes='10vw' className='object-cover' />
-                    <div className='absolute inset-0 bg-slate-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex justify-center items-center'>
-                        <div className='relative w-full h-full'>
-                            <Image
-                                src={"/img1.jpeg"}
-                                alt='hover image'
-                                fill
-                                className='object-cover transition-transform duration-300 group-hover:scale-125'
-                            />
-                            <MovieCart />
-                        </div>
-                    </div>
-                </div>
+                {movies.map(movie => {
+                    const isFev = favorite.some(fev => fev.movieId === movie.id)
+                    return <MovieCart
+                        key={movie.id}
+                        isFev={isFev}
+                        {...movie}
+                    />
+                }
+                )}
             </div>
         </div>
     )

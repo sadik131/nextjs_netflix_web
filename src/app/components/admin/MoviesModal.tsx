@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 
 const MoviesModal: React.FC<EditMovieModalProps> = ({ movie, onClose }) => {
     const [title, setTitle] = useState(movie?.title || "");
+    const [age, setAge] = useState<number | string>(movie?.age ? movie?.age.toString() : "");
+    const [duration, setDuration] = useState<number | string>(movie?.duration ? movie?.duration.toString() : "");
     const [movieUrl, setMovieUrl] = useState(movie?.movieUrl || "");
     const [description, setDescription] = useState(movie?.description || "");
     const [genre, setGenre] = useState(movie?.genre || "");
@@ -25,10 +27,12 @@ const MoviesModal: React.FC<EditMovieModalProps> = ({ movie, onClose }) => {
             genre,
             thumbnail,
             release,
+            age,
+            duration
         };
         try {
             if (movie) {
-               return await dispatch(updateMovieAsync({ id: movie.id, update: newMovie }))
+                return await dispatch(updateMovieAsync({ id: movie.id, update: newMovie }))
             }
             await dispatch(createMovieAsync(newMovie))
         } catch (error) {
@@ -90,6 +94,24 @@ const MoviesModal: React.FC<EditMovieModalProps> = ({ movie, onClose }) => {
                         type="date"
                         value={release}
                         onChange={(e) => setRelease(e.target.value)}
+                        className="w-full border px-2 py-1"
+                    />
+                </div>
+                <div className="mb-2">
+                    <label className="block text-sm">Age</label>
+                    <input
+                        type="number"
+                        value={age}
+                        onChange={(e) => setAge(Number(e.target.value))}
+                        className="w-full border px-2 py-1"
+                    />
+                </div>
+                <div className="mb-2">
+                    <label className="block text-sm">Duration</label>
+                    <input
+                        type="number"
+                        value={duration}
+                        onChange={(e) => setDuration(Number(e.target.value))}
                         className="w-full border px-2 py-1"
                     />
                 </div>

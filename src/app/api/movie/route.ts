@@ -31,6 +31,8 @@ export async function POST(req: NextRequest) {
                 movieUrl: data.movieUrl,
                 genre: data.genre,
                 release: new Date(data.release),
+                age:data.age,
+                duration:data.duration
             }
         })
         console.log(result)

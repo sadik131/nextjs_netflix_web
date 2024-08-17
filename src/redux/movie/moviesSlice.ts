@@ -41,6 +41,7 @@ const moviesSlice = createSlice({
         status: 'idle' || "loading",
         error: null as string | null,
     } as MoviesState,
+    
     reducers: {},
     extraReducers(builder) {
         builder

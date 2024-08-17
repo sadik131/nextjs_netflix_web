@@ -14,7 +14,7 @@ function Navbar() {
                     <Link href={""}>serise</Link>
                     <Link href={""}>flimes</Link>
                     <Link href={""}>New & Popular</Link>
-                    <Link href={""}>My List</Link>
+                    <Link href={"/pages/favorites"}>My List</Link>
                     <Link href={""}>Browes by Languages</Link>
                 </div>
             </div>
