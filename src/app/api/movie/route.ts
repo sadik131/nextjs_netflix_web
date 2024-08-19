@@ -10,7 +10,9 @@ export async function GET() {
                 description: true,
                 thumbnail: true,
                 movieUrl: true,
+                duration:true,
                 genre: true,
+                age:true,
                 release: true,
             }
         })

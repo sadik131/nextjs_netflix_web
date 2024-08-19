@@ -2,6 +2,7 @@
 import { createMovieAsync, updateMovieAsync } from "@/redux/movie/moviesSlice";
 import { AppDispatch } from "@/redux/store";
 import { CreateMovie, EditMovieModalProps } from "@/utils";
+import socket from "@/utils/socket";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -35,6 +36,7 @@ const MoviesModal: React.FC<EditMovieModalProps> = ({ movie, onClose }) => {
                 return await dispatch(updateMovieAsync({ id: movie.id, update: newMovie }))
             }
             await dispatch(createMovieAsync(newMovie))
+            socket.emit('new-movie', 'A new movie has been released!');
         } catch (error) {
             console.log(error)
         }

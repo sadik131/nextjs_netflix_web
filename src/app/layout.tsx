@@ -5,6 +5,7 @@ import ReduxProvider from "./components/ReduxProvider";
 import { AuthProvider } from "./components/Provider";
 import SessionWrapper from "@/utils/Wrapper";
 import Navbar from "./components/Navbar";
+import Notification from "./components/Notification";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
           <AuthProvider>
             <ReduxProvider>
               <SessionWrapper />
+              <Notification />
               <Navbar />
               {children}
             </ReduxProvider>

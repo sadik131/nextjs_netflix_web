@@ -12,7 +12,6 @@ export default function page() {
   const dispatch = useDispatch<AppDispatch>()
   const { status, movies } = useSelector((state: RootState) => state.movie)
 
-  // const [movies, setMovies] = useState<Movie[]>(initialMovies);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [currentMovie, setCurrentMovie] = useState<Movie | null>(null);
@@ -27,10 +26,6 @@ export default function page() {
   };
 
   const handleSave = (updatedMovie: Movie) => {
-    const updatedMovies = movies.map((movie) =>
-      movie.id === updatedMovie.id ? updatedMovie : movie
-    );
-    // setMovies(updatedMovies);
     setIsEditModalOpen(false);
   };
 
@@ -38,12 +33,7 @@ export default function page() {
   const handleDelete = async (id: string) => {
     await dispatch(deleteAsync({ id }))
   };
-
-  // const date = new Date(movies[0]?.release);
-  // const year = date.getFullYear();
-  // const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
-  // const day = String(date.getDate()).padStart(2, '0');
-  // console.log(year, month, day)
+  
   return (
     <AdminLayout>
       <div className="container mx-auto p-4">
@@ -72,7 +62,7 @@ export default function page() {
                   <tr key={movie.id}>
                     <td className="py-2 px-4 border-b">{movie.id}</td>
                     <td className="py-2 px-4 border-b">{movie.title}</td>
-                    <td className="py-2 px-4 border-b">{movie.description}</td>
+                    <td className="py-2 px-4 border-b line-clamp-2">{movie.description}</td>
                     <td className="py-2 px-4 border-b">{movie.genre}</td>
                     <td className="py-2 px-4 border-b">{movie.release}</td>
 

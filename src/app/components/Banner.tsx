@@ -1,20 +1,33 @@
 "use client"
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 
 function Banner() {
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    if (!isClient) {
+        return null; 
+    }
+
     return (
-        <div className='h-[50vh] w-full bg-slate-300 text-black'>
-            {/* <ReactPlayer
-                url='https://youtu.be/RRlPaFP04ps?si=1QyV0ZAADmaVVc8O'
+        <div className='h-[50vh] w-full relative bg-black text-black overflow-hidden'>
+            <ReactPlayer
+                url='/banner.mp4'
+                // url='https://youtu.be/_OKAwz2MsJs?si=imMJKtHmOUquAQWJ'
                 playing
                 muted
                 loop
-                className='react-player absolute'
-            /> */}
-            banner
+                width="100%"
+                height="100%"
+                className='absolute w-full top-0 left-0'
+                style={{ objectFit: 'cover' }}
+            />
         </div>
-    )
+    );
 }
 
 export default Banner;

@@ -1,27 +1,33 @@
 "use client"
 
 import Input from '@/app/components/Input'
-import { signIn } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
 function Auth() {
+  const {data} = useSession()
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
   const [variant, setVariant] = useState("login")
   const [error, setError] = useState("")
+  const router = useRouter()
+
+  if(data?.user){
+    router.push("/")
+  }
 
   const toggleVariant = () => {
     setVariant(variant === "login" ? "register" : "login")
   }
+  
 
   const handelSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(true)
     e.preventDefault()
-    console.log(email, password)
     // login
     if (variant === "login") {
       try {

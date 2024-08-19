@@ -29,7 +29,7 @@ function UserNavbar() {
                 <FaUserCircle className='text-2xl cursor-pointer' />
             </span>
             {isOpen &&
-                <div className='absolute top-8 right-0'>
+                <div className='absolute top-8 right-0 z-10'>
                     <ul className='flex flex-col gap-2 px-4 py-2 bg-white rounded-lg shadow-md text-black'>
 
                         {user?.role === "ADMIN" && <Link onClick={() => setIsOpen(!isOpen)} href={"/pages/admin/dashboard"}>Admin</Link>}

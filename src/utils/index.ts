@@ -29,6 +29,8 @@ export interface FavoritesProps {
     release: string;
     description: string;
     genre: string;
+    age:number,
+    duration:number
     movieUrl: string;
     isFev: boolean;
     remove?: (id: string) => void;

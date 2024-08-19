@@ -3,6 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 import { IoIosNotifications, IoMdSearch } from 'react-icons/io'
 import UserNavbar from './UserNavbar'
+import NotiIcon from './NotiIcon'
 
 function Navbar() {
     return (
@@ -23,8 +24,8 @@ function Navbar() {
                     <IoMdSearch className='text-2xl' />
                 </span>
                 <span>
-                    <IoIosNotifications className='text-2xl' />
                 </span>
+                <NotiIcon />
                 <UserNavbar />
             </div>
         </div>
