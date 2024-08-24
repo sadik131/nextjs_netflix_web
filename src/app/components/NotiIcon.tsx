@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 
 function NotiIcon() {
     const { notifications } = useSelector((state: RootState) => state.notification)
+    console.log(notifications);
     return (
         <div className='relative'>
             <span>

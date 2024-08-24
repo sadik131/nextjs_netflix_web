@@ -1,6 +1,8 @@
 "use client"
-import React from "react";
+import React, { useState } from "react";
+import { FaShareAlt } from "react-icons/fa";
 import ReactPlayer from "react-player";
+import SocialShareModal from "./SocialShareModal";
 
 interface VideoProp {
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -8,6 +10,16 @@ interface VideoProp {
 }
 
 function PlayVideoModal({ setOpen, url }: VideoProp) {
+    const [modalOpen, setModalOpen] = useState(false)
+
+    const handleShareClick = () => {
+        setModalOpen(true);
+      };
+    
+      const handleCloseModal = () => {
+        setModalOpen(false);
+      };
+
     return (
         <div className="fixed w-full inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white p-5 w-full md:w-9/12 rounded-lg relative mx-auto">
@@ -17,9 +29,8 @@ function PlayVideoModal({ setOpen, url }: VideoProp) {
                 >
                     X
                 </button>
-                <div className='h-[90vh] w-full relative bg-black text-black overflow-hidden'>
+                <div className='h-[85vh] w-full relative bg-black text-black overflow-auto'>
                     <ReactPlayer
-                        // url='/banner.mp4'
                         url={url}
                         playing
                         controls
@@ -30,6 +41,11 @@ function PlayVideoModal({ setOpen, url }: VideoProp) {
                         style={{ objectFit: 'cover' }}
                     />
                 </div>
+                <button onClick={handleShareClick} className="mt-4 text-blue-500">
+                    <FaShareAlt size={24} /> Share
+                </button>
+                <SocialShareModal videoUrl={url} isOpen={modalOpen} onClose={handleCloseModal} />
+
             </div>
         </div>
     );

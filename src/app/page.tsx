@@ -2,7 +2,7 @@ import Layout from "./components/Layout";
 import Banner from "./components/Banner";
 import MovieList from "./components/MovieList";
 
-export default function Home() {
+const Home = ()=> {
 
   return (
     <Layout>
@@ -11,3 +11,5 @@ export default function Home() {
     </Layout>
   );
 }
+
+export default Home;

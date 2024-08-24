@@ -5,16 +5,19 @@ import { deleteAsync, fetchMovieAsync } from '@/redux/movie/moviesSlice';
 import { AppDispatch, RootState } from '@/redux/store';
 import { Movie } from '@/utils';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+
 
 
 export default function page() {
   const dispatch = useDispatch<AppDispatch>()
   const { status, movies } = useSelector((state: RootState) => state.movie)
-
+  
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [currentMovie, setCurrentMovie] = useState<Movie | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(fetchMovieAsync())
@@ -37,14 +40,14 @@ export default function page() {
   return (
     <AdminLayout>
       <div className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4">Manage Movies/Shows</h1>
+        <h1 className="text-2xl font-bold mb-4">{t('manageMovies')}</h1>
         <button
           onClick={() => setIsCreateModalOpen(true)}
           className="bg-green-500 text-white px-4 py-2 mb-4"
         >
-          Create New Movie/Show
+          {t("create_movie")}
         </button>
-        {status === "loading" ? <h1>loading...</h1> :
+        {status === "loading" ? <h1>{t("loading")}</h1> :
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white">
               <thead>
@@ -71,13 +74,13 @@ export default function page() {
                         onClick={() => handleEdit(movie)}
                         className="bg-blue-500 text-white px-2 py-1 mr-2"
                       >
-                        Edit
+                        {t("edit")}
                       </button>
                       <button
                         onClick={() => handleDelete(movie.id!)}
                         className="bg-red-500 text-white px-2 py-1"
                       >
-                        Delete
+                        {t("delete")}
                       </button>
                     </td>
                   </tr>

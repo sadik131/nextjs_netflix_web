@@ -4,6 +4,7 @@ import React from 'react'
 import { IoIosNotifications, IoMdSearch } from 'react-icons/io'
 import UserNavbar from './UserNavbar'
 import NotiIcon from './NotiIcon'
+import LanguageToggle from './LanguageToggle'
 
 function Navbar() {
     return (
@@ -16,7 +17,8 @@ function Navbar() {
                     <Link href={""}>flimes</Link>
                     <Link href={""}>New & Popular</Link>
                     <Link href={"/pages/favorites"}>My List</Link>
-                    <Link href={""}>Browes by Languages</Link>
+                    <LanguageToggle />
+
                 </div>
             </div>
             <div className='flex items-center gap-4'>
