@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
             payment_method_types: ['card'],
             line_items: [{ price: priceId, quantity: 1 }],
             mode: 'subscription',
-            success_url: `${process.env.FRONTEND_URL}/pages/success`,
+            success_url: `${process.env.FRONTEND_URL}`,
             cancel_url: `${process.env.FRONTEND_URL}/pages/cancel`,
             customer_email: session.user.email,
         });

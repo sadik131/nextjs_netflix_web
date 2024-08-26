@@ -42,6 +42,17 @@ export function deleteUserApi(id: string): Promise<{ data: User }> {
     })
 }
 
+export function deleteFevApi(id: string): Promise<{ data: FavoriteList }> {
+    return new Promise(async (resolve) => {
+        const responce = await fetch(`/api/favorites/${id}`, {
+            method: 'DELETE',
+            headers: { "content-type": "application/json" },
+        })
+        const data = await responce.json()
+        resolve({ data })
+    })
+}
+
 export function favoritesApi(): Promise<{ data: FavoriteList[] }> {
     return new Promise(async (resolve) => {
         const responce = await fetch(`/api/favorites`)

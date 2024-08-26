@@ -26,7 +26,6 @@ const ProtectedPage = ({ children }: { children: React.ReactNode }) => {
             const checkAccess = async () => {
                 const response = await fetch('/api/verifySub');
                 const data = await response.json();
-                console.log(data,"access");
                 setHasAccess(data.access);
             };
 

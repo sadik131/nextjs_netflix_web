@@ -57,7 +57,6 @@ const moviesSlice = createSlice({
             })
             .addCase(createMovieAsync.fulfilled, (state, action: PayloadAction<Movie>) => {
                 state.status = 'succeeded';
-                console.log(action.payload)
                 state.movies.push(action.payload)
             })
             .addCase(updateMovieAsync.pending, (state) => {

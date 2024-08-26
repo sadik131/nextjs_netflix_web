@@ -7,15 +7,15 @@ export async function GET(req: NextRequest) {
         const session = await getServerSession()
 
         const user = await prisma.user.findFirst({ where: { email: session?.user?.email! } })
+
+        if (!user) {
+            return NextResponse.json({ error: 'User not found' }, { status: 404 });
+        }
+
         const result = await prisma.favorites.findMany({
-            where: {
-                userId: user?.id
-            },
-            select:{
-                movie:true,
-                userId:true,
-                movieId:true,
-                id:true
+            where: { userId: user.id },
+            include: {
+                movie: true
             }
         })
         return NextResponse.json(result)
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
         const session = await getServerSession()
 
         const user = await prisma.user.findFirst({ where: { email: session?.user?.email! } })
-        console.log(user?.id, data.id)
+        
         const existFev = await prisma.favorites.findFirst({
             where: {
                 movieId: data.id,
@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
             data: {
                 movieId: data.id,
                 userId: user?.id
-            }
+            },
         })
         console.log(result);
         return NextResponse.json(result)

@@ -22,6 +22,13 @@ export interface Movie {
     release: string;
 }
 
+export interface ProfileProp {
+    id: string
+    userId: string
+    name: string
+    type: "CHILD" | "PARENT"
+}
+
 export interface FavoritesProps {
     id: string;
     title: string;
@@ -29,11 +36,10 @@ export interface FavoritesProps {
     release: string;
     description: string;
     genre: string;
-    age:number,
-    duration:number
+    age: number,
+    duration: number
     movieUrl: string;
     isFev: boolean;
-    remove?: (id: string) => void;
 }
 
 
@@ -44,8 +50,8 @@ export interface CreateMovie {
     movieUrl: string,
     genre: string;
     release: string;
-    age: number |string;
-    duration: number |string
+    age: number | string;
+    duration: number | string
 }
 
 export interface MoviesState {
@@ -62,7 +68,8 @@ export interface EditMovieModalProps {
 }
 
 export interface FavoriteList {
-    id: string
-    movieId: string
-    userId: string
+    id: string;
+    movieId: string;
+    userId: string;
+    movie: Movie;
 }

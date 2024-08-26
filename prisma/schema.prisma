@@ -18,15 +18,30 @@ enum Role {
   USER
 }
 
+enum ProfileType {
+  PARENT
+  CHILD
+}
+
 model User {
   id           String         @id @default(uuid())
   name         String
   email        String
+  img          String?
   password     String
   role         Role           @default(USER)
   Save         Save[]
   Favorites    Favorites[]
   Subscription Subscription[]
+  Profile      Profile[]
+}
+
+model Profile {
+  id     Int         @id @default(autoincrement())
+  userId String
+  user   User        @relation(fields: [userId], references: [id])
+  name   String
+  type   ProfileType
 }
 
 model Subscription {

@@ -7,16 +7,16 @@ import { CreateUserData } from "@/utils/index"
 import { AppDispatch } from "@/redux/store";
 import { useRouter } from "next/navigation";
 
-const SessionWrapper: React.FC = () => {
+const SessionWrapper = ({ children }: { children: React.ReactNode }) => {
     const { data: session, status } = useSession();
     const dispatch = useDispatch<AppDispatch>();
     const router = useRouter()
 
     useEffect(() => {
-        if (status === "loading") return; 
+        if (status === "loading") return;
 
         if (!session?.user) {
-            router.push("/pages/auth");
+            router.replace("/pages/auth");
         }
     }, [session, status, router]);
 
@@ -31,8 +31,12 @@ const SessionWrapper: React.FC = () => {
             }
         }
     }, [session, status, dispatch]);
+    
+    if (status === "loading") {
+        return <div>Loading...</div>; 
+    }
 
-    return null;
+    return children
 };
 
 export default SessionWrapper;

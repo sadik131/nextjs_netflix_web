@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { createUserApi, fetchUserApi, makeAdminApi, deleteUserApi, favoritesApi ,ToggleFavoriteApi} from "./authApi";
+import { createUserApi, fetchUserApi, makeAdminApi, deleteUserApi, deleteFevApi, favoritesApi, ToggleFavoriteApi } from "./authApi";
 import { CreateUserData, User, FavoriteList } from "@/utils";
 
 export const createUserAsync = createAsyncThunk<User, CreateUserData>(
@@ -36,8 +36,16 @@ export const deleteUserAsync = createAsyncThunk<User, { id: string }>(
 
 export const ToggleFavoriteAsync = createAsyncThunk<FavoriteList, { id: string }>(
     "auth/ToggleFavoriteApi",
-    async ({ id }):Promise<FavoriteList> => {
+    async ({ id }): Promise<FavoriteList> => {
         const response = await ToggleFavoriteApi(id);
+        return response.data;
+    }
+);
+
+export const deleteFevAsync = createAsyncThunk<FavoriteList, { id: string }>(
+    "auth/deleteFevApi",
+    async ({ id }) => {
+        const response = await deleteFevApi(id);
         return response.data;
     }
 );
@@ -124,6 +132,14 @@ const authSlice = createSlice({
                 state.status = 'succeeded';
                 state.favorite = action.payload
             })
+            .addCase(deleteFevAsync.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(deleteFevAsync.fulfilled, (state, action: PayloadAction<FavoriteList>) => {
+                state.status = 'succeeded';
+                state.favorite = state.favorite.filter(fav => fav.id !== action.payload.id)
+            })
             .addCase(ToggleFavoriteAsync.pending, (state) => {
                 state.status = 'loading';
                 state.error = null;
@@ -131,11 +147,11 @@ const authSlice = createSlice({
             .addCase(ToggleFavoriteAsync.fulfilled, (state, action: PayloadAction<FavoriteList>) => {
                 state.status = 'succeeded';
                 const index = state.favorite.findIndex(fav => fav.movieId === action.payload.movieId);
-                console.log(index)
+                console.log(action.payload)
                 if (index >= 0) {
                     state.favorite.splice(index, 1);
                 } else {
-                    state.favorite.push(action.payload); 
+                    state.favorite.push(action.payload);
                 }
             })
 
