@@ -10,6 +10,7 @@ const Notification: React.FC = () => {
 
   useEffect(() => {
     socket.on('notification', (data: string) => {
+      console.log(data,"notification");
       dispatch(addNotification(data));
     });
 

@@ -1,8 +1,17 @@
 export interface User {
     id: string,
     name: string
+    img?: string
     email: string
     role: "USER" | "ADMIN"
+}
+
+export interface UpdateUser {
+    id?: string,
+    name?: string
+    img?: string
+    email?: string
+    role?: "USER" | "ADMIN"
 }
 
 export interface CreateUserData {
@@ -42,6 +51,17 @@ export interface FavoritesProps {
     isFev: boolean;
 }
 
+export interface CreateSession {
+    startTime: number
+    endTime: number
+}
+export interface SessionProp {
+    id: string
+    userId: string
+    startTime: number
+    endTime: number
+    duration: number
+}
 
 export interface CreateMovie {
     title: string;

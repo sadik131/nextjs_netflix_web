@@ -1,6 +1,7 @@
 "use client"
 
 import { clearState } from '@/redux/auth/authSlice'
+import { calcSessionAsync } from '@/redux/session/sessionSlice'
 import { AppDispatch, RootState } from '@/redux/store'
 import { signOut } from 'next-auth/react'
 import Link from 'next/link'
@@ -21,6 +22,7 @@ function UserNavbar() {
         setIsOpen(!isOpen)
         await signOut()
         dispatch(clearState());
+        dispatch(calcSessionAsync({ userId: user?.id!, endTime: Date.now() }));
     }
 
     return (
@@ -35,7 +37,7 @@ function UserNavbar() {
                         {user?.role === "ADMIN" && <Link onClick={() => setIsOpen(!isOpen)} href={"/pages/admin/dashboard"}>Admin</Link>}
                         {user ? <>
                             <Link onClick={() => setIsOpen(!isOpen)} href={"/pages/profile"}>Profile</Link>
-                            <button onClick={() => handelSignOut}>SignOut</button>
+                            <button onClick={handelSignOut}>SignOut</button>
                         </>
                             : <Link onClick={() => setIsOpen(!isOpen)} href={"/pages/auth"}>login</Link>}
                     </ul>

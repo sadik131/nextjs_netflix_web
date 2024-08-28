@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { createUserApi, fetchUserApi, makeAdminApi, deleteUserApi, deleteFevApi, favoritesApi, ToggleFavoriteApi } from "./authApi";
-import { CreateUserData, User, FavoriteList } from "@/utils";
+import { createUserApi, fetchUserApi, updateUserApi, deleteUserApi, deleteFevApi, favoritesApi, ToggleFavoriteApi } from "./authApi";
+import { CreateUserData, User, FavoriteList, UpdateUser } from "@/utils";
 
 export const createUserAsync = createAsyncThunk<User, CreateUserData>(
     "auth/createUserApi",
@@ -18,10 +18,10 @@ export const fetchUserAsync = createAsyncThunk<User[]>(
     }
 )
 
-export const makeAdminAsync = createAsyncThunk<User, { update: string, id: string }>(
-    "auth/makeAdminApi",
-    async ({ update, id }) => {
-        const response = await makeAdminApi({ update, id });
+export const updateUserAsync = createAsyncThunk<User, UpdateUser>(
+    "auth/updateUserApi",
+    async (update: UpdateUser) => {
+        const response = await updateUserApi(update);
         return response.data;
     }
 );
@@ -104,14 +104,17 @@ const authSlice = createSlice({
                 state.status = 'succeeded';
                 state.users = action.payload;
             })
-            .addCase(makeAdminAsync.pending, (state) => {
+            .addCase(updateUserAsync.pending, (state) => {
                 state.status = 'loading';
                 state.error = null;
             })
-            .addCase(makeAdminAsync.fulfilled, (state, action: PayloadAction<User>) => {
+            // id: '565bbdb1-54bb-45d5-8fba-52643fba714e',
+            .addCase(updateUserAsync.fulfilled, (state, action: PayloadAction<User>) => {
                 state.status = 'succeeded';
                 const update = action.payload
+                console.log(update);
                 const userIndex = state.users.findIndex(user => user.id === update.id)
+                console.log(userIndex);
                 if (userIndex !== -1) {
                     state.users[userIndex] = action.payload
                 }

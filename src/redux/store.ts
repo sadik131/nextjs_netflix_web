@@ -6,6 +6,7 @@ import subscriptionSlice from "./subscription/subscriptionSlice"
 import LanguageSlice from "./language/LanguageSlice";
 import profileSlice from "./profile/profileSlice";
 import filterSlice from "./filter/filterSlice";
+import sessionSlice from "./session/sessionSlice";
 
 export const store = configureStore({
     reducer: {
@@ -14,8 +15,10 @@ export const store = configureStore({
         notification: notificationSlice,
         subscription: subscriptionSlice,
         language: LanguageSlice,
-        profile:profileSlice,
-        filter:filterSlice
+        profile: profileSlice,
+        filter: filterSlice,
+        session: sessionSlice,
+
     }
 })
 

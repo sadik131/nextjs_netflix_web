@@ -36,7 +36,7 @@ const MoviesModal: React.FC<EditMovieModalProps> = ({ movie, onClose }) => {
                 return await dispatch(updateMovieAsync({ id: movie.id, update: newMovie }))
             }
             await dispatch(createMovieAsync(newMovie))
-            socket.emit('new-movie', 'A new movie has been released!');
+            socket.emit('new-movie', title);
         } catch (error) {
             console.log(error)
         }

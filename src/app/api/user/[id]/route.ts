@@ -7,18 +7,20 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
         const data = await req.json()
         const result = await prisma.user.update({
             where: { id },
-            data: { role: data }
+            data: data
         })
         return NextResponse.json(result)
     } catch (error) {
+        console.log(error);
         return NextResponse.json(error)
     }
 }
+
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
     try {
         const { id } = params
         const result = await prisma.user.delete({
-            where:{id}
+            where: { id }
         })
         return NextResponse.json(result)
     } catch (error) {

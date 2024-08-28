@@ -34,6 +34,16 @@ model User {
   Favorites    Favorites[]
   Subscription Subscription[]
   Profile      Profile[]
+  UserSession  UserSession[]
+}
+
+model UserSession {
+  id        String   @id @default(uuid())
+  userId    String
+  startTime DateTime
+  endTime   DateTime?
+  duration  Float? 
+  User      User     @relation(fields: [userId], references: [id])
 }
 
 model Profile {
@@ -47,7 +57,6 @@ model Profile {
 model Subscription {
   id        Int      @id @default(autoincrement())
   userEmail String
-  // user      User     @relation(fields: [useremail], references: [email])
   stripeId  String   @unique
   status    String
   startDate DateTime

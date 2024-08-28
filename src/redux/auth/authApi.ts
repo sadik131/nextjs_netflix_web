@@ -1,4 +1,4 @@
-import { CreateUserData, FavoriteList, User } from "@/utils"
+import { CreateUserData, FavoriteList, UpdateUser, User } from "@/utils"
 
 export function createUserApi(userinfo: CreateUserData): Promise<{ data: User }> {
     return new Promise(async (resolve) => {
@@ -19,9 +19,10 @@ export function fetchUserApi(): Promise<{ data: User[] }> {
     })
 }
 
-export function makeAdminApi({ update, id }: { update: string, id: string }): Promise<{ data: User }> {
+export function updateUserApi(update: UpdateUser): Promise<{ data: User }> {
+    console.log(update);
     return new Promise(async (resolve) => {
-        const responce = await fetch(`/api/user/${id}`, {
+        const responce = await fetch(`/api/user/${update.id}`, {
             method: 'PATCH',
             headers: { "content-type": "application/json" },
             body: JSON.stringify(update)

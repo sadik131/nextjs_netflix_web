@@ -1,6 +1,6 @@
 "use client"
 import AdminLayout from '@/app/components/admin/AdminLayout'
-import { deleteUserAsync, fetchUserAsync, makeAdminAsync } from '@/redux/auth/authSlice';
+import { deleteUserAsync, fetchUserAsync, updateUserAsync } from '@/redux/auth/authSlice';
 import { AppDispatch, RootState } from '@/redux/store';
 import { User } from '@/utils';
 import React, { useEffect, useState } from 'react'
@@ -16,9 +16,8 @@ export default function page() {
 
 
     const handelRoleChange = (e: React.ChangeEvent<HTMLSelectElement>, id: string) => {
-        const newRole = e.target.value
-        dispatch(makeAdminAsync({ update: newRole, id }))
-
+        const newRole = e.target.value as "USER" | "ADMIN";
+        if(newRole) return dispatch(updateUserAsync({ role: newRole, id }))
     }
 
     return (
